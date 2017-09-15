@@ -1,0 +1,303 @@
+﻿@model  ICollection<Blog.Models.Post>
+<body>
+    <div id="page">
+        <!-- PAGE HEADER WITH TITLE AND BREADCRUMBS -->
+        <div class="page-header">
+            <!-- Page Title -->
+            <div class="container">
+                <h1 class="title">Casey's Personal Blog</h1>
+            </div>
+            <!-- Breadcrumbs -->
+            <div class="breadcrumb-box">
+                <div class="container">
+                    <!-- List of Breadcrumbs -->
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="~/Home/Index">Home</a>
+                        </li>
+                        <li>
+                            <a href="#">Blog</a>
+                        </li>
+                        <li class="active">Decide How This Should Work</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Hide or Display Create New Post Link -->
+            @if (User.IsInRole("Admin")) {
+                @Html.ActionLink("Create New Post", "Create")
+            }
+        </div>
+        <!-- MAIN PAGE -->
+        <section class="page-section">
+            <div class="container">
+                <div class="row">
+                    <!-- BLOG POST LIST -->
+                    <div class="col-sm-12 col-md-9">
+                        <ul class="timeliner blog right">
+                            @foreach (var entry in Model) {
+                                <!-- Each Post as a List Item -->
+                                <li>
+                                    <!-- Post Author and Future Tag List Display -->
+                                    <div class="timeline-meta">
+                                        <div class="meta_details">by @entry.Author</div>
+                                    </div>
+                                    <!-- Post Date Bubble -->
+                                    <div class="timeline-icon">
+                                        <div class="date">
+                                            @entry.Created.ToString("MMM")
+                                            <span>@entry.Created.Day</span>
+                                        </div>
+                                        <span style="color:white">@entry.Created.Year</span>
+                                    </div>
+                                    <!-- Post Title, Body and Media -->
+                                    <div class="timeline-panel">
+                                        <div class="timeline-body">
+                                            <div class="post-item">
+                                                <!-- Post Title -->
+                                                <h2 class="post-title">
+                                                    <a href="blog-single.html">@entry.Title</a>
+                                                </h2>
+                                                <!-- Post Body and Media -->
+                                                <div class="post-content">
+                                                    @if(entry.MediaUrl != null) {
+                                                        @entry.MediaUrl;
+                                                    <br />
+                                                    }
+                                                    @entry.Body
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                            @*<li class="timeline-inverted">
+                                <div class="timeline-icon">
+                                    <div class="date">Jan 
+                                    <span>10</span></div>
+                                </div>
+                                <div class="timeline-panel">
+                                    <div class="timeline-body">
+                                        <div class="post-item">
+                                            <h2 class="post-title">
+                                                <a href="blog-single.html">Sample Blog Post</a>
+                                            </h2>
+                                            <div class="post-content">
+                                                <blockquote>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</blockquote>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>*@
+                        </ul>
+                    </div>
+                    <!-- RIGHT MENU -->
+                    <div class="sidebar col-sm-12 col-md-3">
+                        <!-- CATEGORY LIST ON RIGHT MENU -->
+                        <div class="widget">
+                            <!-- Title -->
+                            <div class="widget-title">
+                                <h3 class="title">Category</h3>
+                            </div>
+                            <!-- Category List -->
+                            <div id="MainMenu2">
+                                <div class="list-group panel">
+                                    <a href="#demo2" class="list-group-item" data-toggle="collapse" data-parent="#MainMenu1">Category List</a>
+                                    <div class="collapse in" id="demo3">
+                                    <a href="#SubMenu2" class="list-group-item" data-toggle="collapse" data-parent="#SubMenu2">Standard Post 
+                                    <i class="fa fa-caret-down"></i></a>
+                                    <div class="collapse list-group-submenu" id="SubMenu2">
+                                    <a href="#" class="list-group-item" data-parent="#SubMenu2">Standard Layout 1</a> 
+                                    <a href="#" class="list-group-item" data-parent="#SubMenu2">Standard Layout 2</a> 
+                                    <a href="#" class="list-group-item" data-parent="#SubMenu2">Standard Layout 3</a> 
+                                    <a href="#" class="list-group-item" data-parent="#SubMenu2">Standard Layout 4</a> 
+                                    <a href="#" class="list-group-item" data-parent="#SubMenu2">Standard Layout 5</a> 
+                                    <a href="#SubSubMenu2" class="list-group-item" data-toggle="collapse" data-parent="#SubSubMenu2">Standard 3 
+                                    <i class="fa fa-caret-down"></i></a>
+                                    <div class="collapse list-group-submenu list-group-submenu-2" id="SubSubMenu2">
+                                    <a href="#" class="list-group-item" data-parent="#SubSubMenu2">Standard</a> 
+                                    <a href="#" class="list-group-item" data-parent="#SubSubMenu2">Standard</a></div></div>
+                                    <a href="javascript:;" class="list-group-item">Gallery Post</a> 
+                                    <a href="javascript:;" class="list-group-item">Video Post</a> 
+                                    <a href="javascript:;" class="list-group-item">Image Post</a> 
+                                    <a href="javascript:;" class="list-group-item">Audio Post</a> 
+                                    <a href="javascript:;" class="list-group-item">Quote Post</a> 
+                                    <a href="javascript:;" class="list-group-item">Link Post</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- RECENT POSTS LIST ON RIGHT MENU -->
+                        <!-- We need a for each loop here, if we even keep the section as it is redundant to the main body of the page -->
+                        <div class="widget">
+                            <!-- Title -->
+                            <div class="widget-title">
+                                <h3 class="title">Recent Posts</h3>
+                            </div>
+                            <!-- Recent Posts List -->
+                            <ul class="latest-posts">
+                                <!-- List of Recent Posts -->
+                                <li>
+                                    <!-- Thumbnail Image of Post-->
+                                    <div class="post-thumb">
+                                        <img class="img-rounded" src="img/sections/blog/1.jpg" alt="" title="" width="84" height="84" />
+                                    </div>
+                                    <!-- Post Details -->
+                                    <div class="post-details">
+                                        <!-- Post Description -->
+                                        <div class="description">
+                                            <a href="#">Post Description Goes Here</a>
+                                        </div>
+                                        <!-- Post Date -->
+                                        <div class="meta">
+                                            <span class="time">
+                                            <i class="fa fa-calendar"></i> 03.11.2014</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="post-thumb">
+                                        <img class="img-rounded" src="img/sections/blog/2.jpg" alt="" title="" width="84" height="84" />
+                                    </div>
+                                    <div class="post-details">
+                                        <div class="description">
+                                            <a href="#">
+                                            <!-- Text -->
+                                            The standard chunk of Lorem Ipsum used since.</a>
+                                        </div>
+                                        <div class="meta">
+                                            <!-- Meta Date -->
+                                            <span class="time">
+                                            <i class="fa fa-calendar"></i> 03.11.2014</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="post-thumb">
+                                        <img class="img-rounded" src="img/sections/blog/3.jpg" alt="" title="" width="84" height="84" />
+                                    </div>
+                                    <div class="post-details">
+                                        <div class="description">
+                                            <a href="#">
+                                            <!-- Text -->
+                                            The standard chunk of Lorem Ipsum used since.</a>
+                                        </div>
+                                        <div class="meta">
+                                            <!-- Meta Date -->
+                                            <span class="time">
+                                            <i class="fa fa-calendar"></i> 03.11.2014</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- -->
+                        @*<div class="widget">
+                            <div class="widget-title">
+                                <h3 class="title">Gallery</h3>
+                            </div>
+                            <div class="owl-carousel navigation-1" data-pagination="false" data-items="1" data-autoplay="true" data-navigation="true">
+                            <img src="img/sections/big-1.jpg" width="270" height="270" alt="" /> 
+                            <img src="img/sections/big-2.jpg" width="270" height="270" alt="" /></div>
+                        </div>*@
+                        <!-- TAGS LIST ON RIGHT MENU -->
+                        <div class="widget">
+                            <!-- Title -->
+                            <div class="widget-title">
+                                <h3 class="title">Tags</h3>
+                            </div>
+                            <!-- Tag List -->
+                            <ul class="tags">
+                                <li>
+                                    <a href="#">Corporate</a>
+                                </li>
+                                <li>
+                                    <a href="#">business</a>
+                                </li>
+                                <li>
+                                    <a href="#">agency</a>
+                                </li>
+                                <li>
+                                    <a href="#">medical</a>
+                                </li>
+                                <li>
+                                    <a href="#">studio</a>
+                                </li>
+                                <li>
+                                    <a href="#">university</a>
+                                </li>
+                                <li>
+                                    <a href="#">motors</a>
+                                </li>
+                                <li>
+                                    <a href="#">charity</a>
+                                </li>
+                                <li>
+                                    <a href="#">realestate</a>
+                                </li>
+                                <li>
+                                    <a href="#">app</a>
+                                </li>
+                                <li>
+                                    <a href="#">restaurant</a>
+                                </li>
+                                <li>
+                                    <a href="#">fitness</a>
+                                </li>
+                                <li>
+                                    <a href="#">band</a>
+                                </li>
+                                <li>
+                                    <a href="#">wedding</a>
+                                </li>
+                                <li>
+                                    <a href="#">sports</a>
+                                </li>
+                                <li>
+                                    <a href="#">fashion</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- FEEDS LIST ON RIGHT MENU -->
+                        <div>
+                            <div class="widget my-feeds">
+                                <div class="widget-title">
+                                    <h3 class="title">Flickr Photos</h3>
+                                </div>
+                                <div class="social-feed flickr-feed"></div>
+                            </div>
+                            <div class="widget my-feeds">
+                                <div class="widget-title">
+                                    <h3 class="title">Pinterest Photos</h3>
+                                </div>
+                                <div class="social-feed pinterest-feed"></div>
+                            </div>
+                            <div class="widget my-feeds">
+                                <div class="widget-title">
+                                    <h3 class="title">Instagram Photos</h3>
+                                </div>
+                                <div class="social-feed instagram-feed"></div>
+                            </div>
+                            <div class="widget my-feeds">
+                                <div class="widget-title">
+                                    <h3 class="title">Dribbble Photos</h3>
+                                </div>
+                                <div class="social-feed dribbble-feed"></div>
+                            </div>
+                            <div class="widget my-feeds">
+                                <div class="widget-title">
+                                    <h3 class="title">Picasa Photos</h3>
+                                </div>
+                                <div class="social-feed picasa-feed"></div>
+                            </div>
+                            <div class="widget my-feeds">
+                                <div class="widget-title">
+                                    <h3 class="title">Youtube Video</h3>
+                                </div>
+                                <div class="social-feed youtube-feed"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
